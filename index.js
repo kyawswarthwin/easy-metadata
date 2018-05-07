@@ -15,10 +15,12 @@ function metadata(filePath) {
             year: data.tags.year,
             track: data.tags.track,
             genre: data.tags.genre,
-            comment: data.tags.comment.text,
-            picture: `data:${data.tags.picture.format};base64,${Buffer.from(
-              new Uint8Array(data.tags.picture.data)
-            ).toString('base64')}`
+            comment: data.tags.comment && data.tags.comment.text,
+            picture:
+              data.tags.picture &&
+              `data:${data.tags.picture.format};base64,${Buffer.from(
+                new Uint8Array(data.tags.picture.data)
+              ).toString('base64')}`
           });
         },
         onError: error => {
