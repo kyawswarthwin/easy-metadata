@@ -5,7 +5,7 @@ const jsmediatags = require('jsmediatags');
 function metadata(filePath) {
   return new Promise((resolve, reject) => {
     new jsmediatags.Reader(filePath)
-      .setTagsToRead(['title', 'artist', 'album', 'year', 'track', 'genre', 'comment', 'picture'])
+      .setTagsToRead(['title', 'artist', 'album', 'year', 'comment', 'track', 'genre', 'picture'])
       .read({
         onSuccess: data => {
           resolve({
@@ -13,9 +13,12 @@ function metadata(filePath) {
             artist: data.tags.artist,
             album: data.tags.album,
             year: data.tags.year,
+            comment:
+              data.tags.comment && data.tags.comment.text
+                ? data.tags.comment.text
+                : data.tags.comment,
             track: data.tags.track,
             genre: data.tags.genre,
-            comment: data.tags.comment && data.tags.comment.text,
             picture:
               data.tags.picture &&
               `data:${data.tags.picture.format};base64,${Buffer.from(
