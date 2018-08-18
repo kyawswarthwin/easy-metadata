@@ -10,8 +10,7 @@ function metadata(filePath) {
           title: tags.title,
           artist: tags.artist && tags.artist.split(',').map(data => data.trim()),
           album: tags.album,
-          year: tags.year && new Date(tags.year).getFullYear(),
-          comment: tags.comment && tags.comment.text ? tags.comment.text : tags.comment,
+          year: tags.year && new Date(tags.year).getFullYear().toString(),
           track: tags.track,
           genre: tags.genre && tags.genre.split(',').map(data => data.trim()),
           cover:
