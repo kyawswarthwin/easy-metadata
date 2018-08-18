@@ -8,9 +8,9 @@ function metadata(filePath) {
       onSuccess: ({ type, tags }) => {
         const metadata = {
           title: tags.title,
-          artist: tags.artist,
+          artist: tags.artist && tags.artist.split(',').map(data => data.trim()),
           album: tags.album,
-          year: tags.year,
+          year: tags.year && new Date(tags.year).getFullYear(),
           comment: tags.comment && tags.comment.text ? tags.comment.text : tags.comment,
           track: tags.track,
           genre: tags.genre,
