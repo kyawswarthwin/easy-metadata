@@ -14,7 +14,7 @@ function metadata(filePath) {
           comment: tags.comment && tags.comment.text ? tags.comment.text : tags.comment,
           track: tags.track,
           genre: tags.genre,
-          picture:
+          cover:
             tags.picture &&
             `data:${tags.picture.format};base64,${Buffer.from(
               new Uint8Array(tags.picture.data)
