@@ -13,7 +13,7 @@ function metadata(filePath) {
           year: tags.year && new Date(tags.year).getFullYear(),
           comment: tags.comment && tags.comment.text ? tags.comment.text : tags.comment,
           track: tags.track,
-          genre: tags.genre,
+          genre: tags.genre && tags.genre.split(',').map(data => data.trim()),
           cover:
             tags.picture &&
             `data:${tags.picture.format};base64,${Buffer.from(
