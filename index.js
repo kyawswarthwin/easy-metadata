@@ -1,38 +1,36 @@
 'use strict';
 
-const jsmediatags = require('jsmediatags');
+const mm = require('music-metadata');
 
 function metadata(filePath) {
-  return new Promise((resolve, reject) => {
-    jsmediatags.read(filePath, {
-      onSuccess: ({ type, tags }) => {
-        const metadata = {
-          title: tags.title,
-          artist: tags.artist && tags.artist.split(',').map(data => data.trim()),
-          album: tags.album,
-          year: tags.year && new Date(tags.year).getFullYear().toString(),
-          track: tags.track,
-          genre: tags.genre && tags.genre.split(',').map(data => data.trim()),
-          cover:
-            tags.picture &&
-            `data:${tags.picture.format};base64,${Buffer.from(
-              new Uint8Array(tags.picture.data)
-            ).toString('base64')}`
-        };
-        if (type === 'MP4') {
-          metadata.synopsis = tags.ldes && tags.ldes.data;
-          metadata.show = tags.tvsh && tags.tvsh.data;
-          metadata.season = tags.tvsn && tags.tvsn.data;
-          metadata.episode = tags.tves && tags.tves.data;
-          metadata.episodeId = tags.tven && tags.tven.data;
-          metadata.network = tags.tvnn && tags.tvnn.data;
-        }
-        resolve(metadata);
-      },
-      onError: error => {
-        reject(error);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { native, common } = await mm.parseFile(filePath, { native: true });
+      const metadata = {
+        title: common.title,
+        artist: common.artists,
+        album: common.album,
+        albumArtist: common.albumartist,
+        year: common.year && common.year.toString(),
+        track: common.track.no,
+        genre: common.genre,
+        cover:
+          common.picture &&
+          `data:${common.picture[0].format};base64,${common.picture[0].data.toString('base64')}`
+      };
+      if (native['iTunes MP4']) {
+        const iTunes = mm.orderTags(native['iTunes MP4']);
+        metadata.synopsis = iTunes.ldes[0];
+        metadata.show = iTunes.tvsh[0];
+        metadata.season = iTunes.tvsn[0];
+        metadata.episode = iTunes.tves[0];
+        metadata.episodeId = iTunes.tven[0];
+        metadata.network = iTunes.tvnn[0];
       }
-    });
+      resolve(metadata);
+    } catch (error) {
+      reject(error);
+    }
   });
 }
 
