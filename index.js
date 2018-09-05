@@ -20,12 +20,12 @@ function metadata(filePath) {
       };
       if (native['iTunes MP4']) {
         const iTunes = mm.orderTags(native['iTunes MP4']);
-        metadata.synopsis = iTunes.ldes[0];
-        metadata.show = iTunes.tvsh[0];
-        metadata.season = iTunes.tvsn[0];
-        metadata.episode = iTunes.tves[0];
-        metadata.episodeId = iTunes.tven[0];
-        metadata.network = iTunes.tvnn[0];
+        metadata.synopsis = iTunes.ldes && iTunes.ldes[0];
+        metadata.show = iTunes.tvsh && iTunes.tvsh[0];
+        metadata.season = iTunes.tvsn && iTunes.tvsn[0];
+        metadata.episode = iTunes.tves && iTunes.tves[0];
+        metadata.episodeId = iTunes.tven && iTunes.tven[0];
+        metadata.network = iTunes.tvnn && iTunes.tvnn[0];
       }
       resolve(metadata);
     } catch (error) {
