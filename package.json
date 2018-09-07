@@ -1,6 +1,6 @@
 {
   "name": "easy-metadata",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/kyawswarthwin/easy-metadata#readme",
   "dependencies": {
-    "music-metadata": "^2.6.1"
+    "music-metadata": "^2.6.2"
   }
 }

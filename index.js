@@ -8,12 +8,12 @@ function metadata(filePath) {
       const { native, common } = await mm.parseFile(filePath, { native: true });
       const metadata = {
         title: common.title,
-        artist: common.artists,
+        artist: common.artists && getUniqueValue(common.artists[0]),
         album: common.album,
         albumArtist: common.albumartist,
         year: common.year && common.year.toString(),
         track: common.track.no,
-        genre: common.genre,
+        genre: common.genre && getUniqueValue(common.genre[0]),
         cover:
           common.picture &&
           `data:${common.picture[0].format};base64,${common.picture[0].data.toString('base64')}`
@@ -32,6 +32,10 @@ function metadata(filePath) {
       reject(error);
     }
   });
+}
+
+function getUniqueValue(value) {
+  return value && [...new Set(value.match(/(?=\S)[^,]+?(?=\s*(,|$))/g))];
 }
 
 module.exports = metadata;
