@@ -21,6 +21,6 @@
   "homepage": "https://github.com/kyawswarthwin/easy-metadata#readme",
   "dependencies": {
     "jimp": "^0.4.0",
-    "music-metadata": "^2.6.2"
+    "music-metadata": "^2.7.1"
   }
 }
