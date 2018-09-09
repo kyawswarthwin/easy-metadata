@@ -14,13 +14,13 @@ async function metadata(filePath) {
     .getBase64Async(common.picture[0].format));
   return {
     title: common.title,
-    artist: common.artists && getUniqueValue(common.artists[0]),
+    artist: splitCommaSeparatedValues(common.artists),
     album: common.album,
     year: common.year && common.year.toString(),
     track: common.track.no,
-    genre: common.genre && getUniqueValue(common.genre[0]),
+    genre: splitCommaSeparatedValues(common.genre),
     picture: picture,
-    synopsis: common.description && common.description[0],
+    synopsis: common.description && common.description,
     show: common.tvShow,
     season: common.tvSeason,
     episode: common.tvEpisode,
@@ -29,8 +29,11 @@ async function metadata(filePath) {
   };
 }
 
-function getUniqueValue(value) {
-  return value && [...new Set(value.match(/(?=\S)[^,]+?(?=\s*(,|$))/g))];
+function splitCommaSeparatedValues(array) {
+  if(array && array.length === 1) {
+    return array[0].split(',').map(v => v.trim());
+  }
+  return array;
 }
 
 module.exports = metadata;
