@@ -23,8 +23,8 @@ function metadata(filePath) {
         genre: common.genre && getUniqueValue(common.genre[0]),
         picture: picture
       };
-      if (native['iTunes MP4']) {
-        const iTunes = mm.orderTags(native['iTunes MP4']);
+      if (native['iTunes']) {
+        const iTunes = mm.orderTags(native['iTunes']);
         metadata.synopsis = iTunes.ldes && iTunes.ldes[0];
         metadata.show = iTunes.tvsh && iTunes.tvsh[0];
         metadata.season = iTunes.tvsn && iTunes.tvsn[0];
